@@ -2,8 +2,6 @@
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import static java.lang.Integer.parseInt;
-import java.time.Duration;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
