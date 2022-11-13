@@ -5,17 +5,21 @@ import java.util.Optional;
 public class ProcesosModel {
     private long pid;
     private Optional<String> nombreProceso;
-    private Optional<String> usuario;
+    private String usuario;
     private Optional<String[]> descripcion;
     private int prioridad;
 
-    public ProcesosModel(long pid, Optional<String> nombreProceso, Optional<String> nombreUser, Optional<String[]> info, int prioridad) {
+    public ProcesosModel(long pid, Optional<String> nombreProceso, String nombreUser, Optional<String[]> info, int prioridad) {
         this.pid = pid;
         this.nombreProceso = nombreProceso;
         this.usuario = nombreUser;
         this.descripcion = info;
         this.prioridad = prioridad;
     }
+
+    public ProcesosModel() {
+        
+            }
 
     /**
      * @return int return the pib
@@ -48,14 +52,14 @@ public class ProcesosModel {
     /**
      * @return String return the usuario
      */
-    public Optional<String> getUsuario() {
+    public String getUsuario() {
         return usuario;
     }
 
     /**
      * @param usuario the usuario to set
      */
-    public void setUsuario(Optional<String> usuario) {
+    public void setUsuario(String  usuario) {
         this.usuario = usuario;
     }
 

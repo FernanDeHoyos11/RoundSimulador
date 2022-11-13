@@ -12,6 +12,8 @@ public class CatalogoModel {
         this.nombreCatalogo = nombreCatalogo;
         this.ProcesoModel = pm;
     }
+    
+    public CatalogoModel(){}
 
     /**
      * @return int return the consecutivo
