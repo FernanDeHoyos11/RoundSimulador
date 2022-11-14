@@ -5,7 +5,9 @@
         <group>
             <file>file:/home/fernan/Descargas/Ing-sistemas%20(8-semestre%20-%202022-02)/SOs/RoundSimulador/src/models/CatalogoModel.java</file>
             <file>file:/home/fernan/Descargas/Ing-sistemas%20(8-semestre%20-%202022-02)/SOs/RoundSimulador/src/view/Procesar.java</file>
+            <file>file:/home/fernan/Descargas/Ing-sistemas%20(8-semestre%20-%202022-02)/SOs/RoundSimulador/src/connect/Consultas.java</file>
             <file>file:/home/fernan/Descargas/Ing-sistemas%20(8-semestre%20-%202022-02)/SOs/RoundSimulador/src/controllers/ControllerProceso.java</file>
+            <file>file:/home/fernan/Descargas/Ing-sistemas%20(8-semestre%20-%202022-02)/SOs/RoundSimulador/src/models/ProcesosModel.java</file>
             <file>file:/home/fernan/Descargas/Ing-sistemas%20(8-semestre%20-%202022-02)/SOs/RoundSimulador/src/view/Start.java</file>
         </group>
     </open-files>
