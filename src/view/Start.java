@@ -2,13 +2,11 @@ package view;
 
 
 import controllers.ControllerProceso;
-import java.time.Duration;
-import java.util.Optional;
-import java.util.function.Consumer;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import models.CatalogoModel;
-import models.ProcesosModel;
+import javax.swing.JTable;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -20,14 +18,26 @@ import models.ProcesosModel;
  * @author Isaac
  */
 public class Start extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Start
-     */
-    ControllerProceso ControllerProceso = new ControllerProceso();
+Procesar procesar = new Procesar();
+ControllerProceso ControllerProceso = new ControllerProceso();
 
     public Start() {
         initComponents();
+      tabla.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mousePressed(MouseEvent eve){
+              JTable jtable = (JTable) eve.getSource();
+              Point point = eve.getPoint();
+              int row = jtable.rowAtPoint(point);
+              if(eve.getClickCount() == 1){
+                  String conteo = tabla.getValueAt(tabla.getSelectedRow(),1).toString();
+                  int datoRafaga = conteo.length();
+                  procesar.jTFCapturaRafaga.setText(String.valueOf(datoRafaga));
+                 // txtNombreCatalogo.setText(tabla.getValueAt(tabla.getSelectedRow(),1).toString());
+              }
+          }
+          
+      });
     }
 
     /**
@@ -44,8 +54,11 @@ public class Start extends javax.swing.JFrame {
         txtNombreCatalogo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnStart = new javax.swing.JButton();
+        JBSimulador = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        BtnPasarDatos = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +72,13 @@ public class Start extends javax.swing.JFrame {
         btnStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStartActionPerformed(evt);
+            }
+        });
+
+        JBSimulador.setText("Simulador");
+        JBSimulador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBSimuladorActionPerformed(evt);
             }
         });
 
@@ -76,7 +96,10 @@ public class Start extends javax.swing.JFrame {
                         .addComponent(txtNombreCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(73, 73, 73)
-                        .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(JBSimulador)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -88,7 +111,8 @@ public class Start extends javax.swing.JFrame {
                 .addComponent(txtNombreCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnStart)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JBSimulador))
         );
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -102,6 +126,14 @@ public class Start extends javax.swing.JFrame {
         tabla.setAutoscrolls(false);
         tabla.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(tabla);
+
+        BtnPasarDatos.setText("Tomar datos");
+        BtnPasarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnPasarDatosActionPerformed(evt);
+            }
+        });
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,6 +151,10 @@ public class Start extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(107, 107, 107))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(BtnPasarDatos)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +164,9 @@ public class Start extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnPasarDatos)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -145,6 +183,15 @@ public class Start extends javax.swing.JFrame {
     }
    
     }//GEN-LAST:event_btnStartActionPerformed
+
+    private void JBSimuladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSimuladorActionPerformed
+        
+        procesar.setVisible(true);
+    }//GEN-LAST:event_JBSimuladorActionPerformed
+
+    private void BtnPasarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPasarDatosActionPerformed
+        
+    }//GEN-LAST:event_BtnPasarDatosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,12 +229,15 @@ public class Start extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnPasarDatos;
+    private javax.swing.JButton JBSimulador;
     private javax.swing.JButton btnStart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabla;
+    public javax.swing.JTable tabla;
     private javax.swing.JTextField txtNombreCatalogo;
     // End of variables declaration//GEN-END:variables
 }
