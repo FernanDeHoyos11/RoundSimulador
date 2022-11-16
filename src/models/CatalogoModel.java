@@ -5,12 +5,7 @@ public class CatalogoModel {
     private String nombreCatalogo;
     public ProcesosModel ProcesoModel;
 
-    public CatalogoModel(
-            int consecutivo,
-            String nombreCatalogo, ProcesosModel pm) {
-        this.consecutivo = consecutivo;
-        this.nombreCatalogo = nombreCatalogo;
-        this.ProcesoModel = pm;
+    public CatalogoModel() {
     }
 
     /**

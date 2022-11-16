@@ -9,12 +9,7 @@ public class ProcesosModel {
     private Optional<String[]> descripcion;
     private int prioridad;
 
-    public ProcesosModel(long pid, Optional<String> nombreProceso, Optional<String> nombreUser, Optional<String[]> info, int prioridad) {
-        this.pid = pid;
-        this.nombreProceso = nombreProceso;
-        this.usuario = nombreUser;
-        this.descripcion = info;
-        this.prioridad = prioridad;
+    public ProcesosModel() {
     }
 
     /**
