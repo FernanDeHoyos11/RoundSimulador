@@ -62,6 +62,12 @@ public class Start extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Simulador Round Robin");
 
+        txtNombreCatalogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreCatalogoActionPerformed(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel2.setText("Digite el nombre del catalogo de procesos");
 
@@ -151,30 +157,43 @@ public class Start extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
+
         try {
             if (txtNombreCatalogo.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Por favor colocar nombre al catalogo", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 tabla.setModel(ControllerProceso.cargar(txtNombreCatalogo.getText()));
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error al cargar los procesos", JOptionPane.ERROR_MESSAGE);
         }
 
+       }
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void JBSimuladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSimuladorActionPerformed
 
         procesar.setVisible(true);
     }//GEN-LAST:event_JBSimuladorActionPerformed
+
+
+    private void BtnPasarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPasarDatosActionPerformed
+
+    }//GEN-LAST:event_BtnPasarDatosActionPerformed
+
+    private void txtNombreCatalogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCatalogoActionPerformed
+      
+    }//GEN-LAST:event_txtNombreCatalogoActionPerformed
 
     /**
      * @param args the command line arguments
