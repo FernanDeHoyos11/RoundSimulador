@@ -5,11 +5,11 @@ import java.util.Optional;
 public class ProcesosModel {
     private long pid;
     private Optional<String> nombreProceso;
-    private String usuario;
+    private Optional<String> usuario;
     private Optional<String[]> descripcion;
     private int prioridad;
 
-    public ProcesosModel(long pid, Optional<String> nombreProceso, String nombreUser, Optional<String[]> info, int prioridad) {
+    public ProcesosModel(long pid, Optional<String> nombreProceso, Optional<String> nombreUser, Optional<String[]> info, int prioridad) {
         this.pid = pid;
         this.nombreProceso = nombreProceso;
         this.usuario = nombreUser;
@@ -52,14 +52,14 @@ public class ProcesosModel {
     /**
      * @return String return the usuario
      */
-    public String getUsuario() {
+    public Optional<String> getUsuario() {
         return usuario;
     }
 
     /**
      * @param usuario the usuario to set
      */
-    public void setUsuario(String  usuario) {
+    public void setUsuario(Optional<String>  usuario) {
         this.usuario = usuario;
     }
 

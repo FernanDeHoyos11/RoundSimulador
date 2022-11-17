@@ -175,12 +175,12 @@ ControllerProceso ControllerProceso = new ControllerProceso();
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
       
-    
-    try {            
+    tabla.setModel(ControllerProceso.cargar());
+    /**try {            
         tabla.setModel(ControllerProceso.cargar());
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, e,"Error al cargar los procesos",JOptionPane.ERROR_MESSAGE);
-    }
+    }**/
    
     }//GEN-LAST:event_btnStartActionPerformed
 
