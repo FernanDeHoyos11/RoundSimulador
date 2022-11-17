@@ -50,7 +50,7 @@ public class ProcesosModel {
     /**
      * @param usuario the usuario to set
      */
-    public void setUsuario(Optional<String> usuario) {
+    public void setUsuario(Optional<String>  usuario) {
         this.usuario = usuario;
     }
 

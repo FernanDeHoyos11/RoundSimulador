@@ -7,6 +7,7 @@ public class CatalogoModel {
 
     public CatalogoModel() {
     }
+    
 
     /**
      * @return int return the consecutivo

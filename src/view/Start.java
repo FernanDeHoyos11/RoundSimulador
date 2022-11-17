@@ -1,23 +1,42 @@
+package view;
 
 import controllers.ControllerProceso;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Isaac
  */
 public class Start extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Start
-     */
+    Procesar procesar = new Procesar();
     ControllerProceso ControllerProceso = new ControllerProceso();
+
     public Start() {
         initComponents();
+        tabla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent eve) {
+                JTable jtable = (JTable) eve.getSource();
+                Point point = eve.getPoint();
+                int row = jtable.rowAtPoint(point);
+                if (eve.getClickCount() == 1) {
+                    String conteo = tabla.getValueAt(tabla.getSelectedRow(), 1).toString();
+                    int datoRafaga = conteo.length();
+                    procesar.jTFCapturaRafaga.setText(String.valueOf(datoRafaga));
+                    // txtNombreCatalogo.setText(tabla.getValueAt(tabla.getSelectedRow(),1).toString());
+                }
+            }
+
+        });
     }
 
     /**
@@ -34,8 +53,10 @@ public class Start extends javax.swing.JFrame {
         txtNombreCatalogo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnStart = new javax.swing.JButton();
+        JBSimulador = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +73,13 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
+        JBSimulador.setText("Simulador");
+        JBSimulador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBSimuladorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -63,9 +91,13 @@ public class Start extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnStart)
-                            .addComponent(txtNombreCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtNombreCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(JBSimulador)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -77,21 +109,23 @@ public class Start extends javax.swing.JFrame {
                 .addComponent(txtNombreCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnStart)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JBSimulador))
         );
 
-        jTable.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable);
+        tabla.setAutoscrolls(false);
+        tabla.setCellSelectionEnabled(true);
+        jScrollPane1.setViewportView(tabla);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,17 +152,26 @@ public class Start extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-        // TODO add your handling code here:
-        ControllerProceso.mostrarDetallesProcesos();
+        try {
+            tabla.setModel(ControllerProceso.cargar());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al cargar los procesos", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnStartActionPerformed
+
+    private void JBSimuladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSimuladorActionPerformed
+
+        procesar.setVisible(true);
+    }//GEN-LAST:event_JBSimuladorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,12 +209,14 @@ public class Start extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBSimulador;
     private javax.swing.JButton btnStart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable;
+    public javax.swing.JTable tabla;
     private javax.swing.JTextField txtNombreCatalogo;
     // End of variables declaration//GEN-END:variables
 }
