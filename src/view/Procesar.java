@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Dennis
  */
-public class Procesar extends javax.swing.JFrame {
+public class Procesar extends javax.swing.JFrame implements Runnable{
 
     int Contador;//Contador del total de procesos que se van ingresando
     int NProceso;//Carga el número de procesos ejecutándose
@@ -29,9 +29,8 @@ public class Procesar extends javax.swing.JFrame {
     int CantidadProcesos;//Número de procesos terminados
     private boolean vd_suspended = false;
     final static Object vd_monitor = new Object();
-    Hilo hilo = new Hilo();
+    private Thread hilo;
 
-    
     /**
      * Creates new form Procesar
      */
@@ -40,6 +39,7 @@ public class Procesar extends javax.swing.JFrame {
         jTIngreso.setBackground(Color.CYAN);
         jTIngreso.setForeground(Color.blue);
         jTFinal.setBackground(Color.GREEN);
+        hilo = new Thread(this);
     }
 
     /**
@@ -75,6 +75,7 @@ public class Procesar extends javax.swing.JFrame {
         jLPorcentajeProceso = new javax.swing.JLabel();
         jLNumeroProceso = new javax.swing.JLabel();
         Bpausar = new javax.swing.JToggleButton();
+        btnReanudar = new javax.swing.JToggleButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -201,6 +202,13 @@ public class Procesar extends javax.swing.JFrame {
             }
         });
 
+        btnReanudar.setText("Reanudar");
+        btnReanudar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReanudarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -242,17 +250,19 @@ public class Procesar extends javax.swing.JFrame {
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jTFCapturaRafaga, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(97, 97, 97)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jBIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Bpausar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(Bpausar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnReanudar))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(CanTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 11, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,7 +277,8 @@ public class Procesar extends javax.swing.JFrame {
                     .addComponent(jBIniciar)
                     .addComponent(jTFCapturaQuantum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBAgregar)
-                    .addComponent(Bpausar))
+                    .addComponent(Bpausar)
+                    .addComponent(btnReanudar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -316,7 +327,7 @@ public class Procesar extends javax.swing.JFrame {
         if (jTIngreso.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "No Existen Datos", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
-            new Thread(new Hilo()).start(); //Crea un nuevo hilo
+            hilo.start(); //Crea un nuevo hilo
             Iniciar();
         }
 
@@ -355,31 +366,20 @@ public class Procesar extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFCapturaRafagaKeyTyped
 
     private void BpausarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BpausarActionPerformed
-       System.out.println(Bpausar.isSelected());
-
-        if (Bpausar.isSelected()) {
-            vd_suspended = true;
-            System.out.println("fernan");
-            synchronized (vd_monitor) {
-                vd_monitor.notify();
-            }
-        } else if (!Bpausar.isSelected()) {
-            System.out.println("david");
-            vd_suspended = false;
-            synchronized (vd_monitor) {
-                vd_monitor.notify();
-            }
-        }
+        pausar();
     }//GEN-LAST:event_BpausarActionPerformed
+
+    private void btnReanudarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReanudarActionPerformed
+        // TODO add your handling code here:
+        continuar();
+    }//GEN-LAST:event_btnReanudarActionPerformed
 
     /**
      * @param args the command line arguments
-     */
-
-    private class Hilo extends Thread{ //Objeto de tipo Hilo con extension ejectubale
+     */ //Objeto de tipo Hilo con extension ejectubale
 
         @Override
-        public void run(){
+        public void run() {
             int estado = 1; //Estado de while que indica si se puede seguir o no
             int i = 0; // contador de while
             boolean pausar = false;
@@ -442,38 +442,19 @@ public class Procesar extends javax.swing.JFrame {
                     i = 0;
                     jLNumeroProceso.setText(String.valueOf("")); //Borrar contenido
                     jLPorcentajeProceso.setText(String.valueOf(""));
-
-                   Dormir();
                 }
             } catch (Exception e) {
             }
-
-        }
-        
-                public void parar() {
-            try {
-                if (vd_suspended) {
-                    synchronized (vd_monitor) {
-                        System.out.println("paro");
-                        while (vd_suspended) {
-                            suspend();
-                        }
-                    }
-                } else if (!vd_suspended) {
-                    synchronized (vd_monitor) {
-                        System.out.println("inicio");
-                        while (vd_suspended) {
-                            resume();
-                        }
-                    }
-                }
-            } catch (Exception ex) {
-
-            }
-        }
-
     }
 
+    public void pausar() {
+        hilo.suspend();
+    }
+
+    public void continuar() {
+        hilo.resume();
+    }
+    
     public void Dormir() {
         try {
             Thread.sleep(700); //Dormir sistema
@@ -567,6 +548,7 @@ public class Procesar extends javax.swing.JFrame {
     private javax.swing.JToggleButton Bpausar;
     private javax.swing.JLabel CanProcess;
     private javax.swing.JLabel CanTiempo;
+    private javax.swing.JToggleButton btnReanudar;
     private javax.swing.JButton jBAgregar;
     private javax.swing.JButton jBIniciar;
     private javax.swing.JLabel jLNumeroProceso;

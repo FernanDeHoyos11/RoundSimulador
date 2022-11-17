@@ -29,14 +29,14 @@ public class ControllerProceso {
             miTabla[2] = Usuario.toString().replace("Optional.", "").replace("Optional", "");
             miTabla[3] = Informacion;
             miTabla[4] = (Usuario.toString().replace("Optional.", "").replace("Optional", "").equals("empty") || Usuario.toString().replace("Optional.", "").replace("Optional", "").equals("root"))?1:0;
-            CatalogoModel CatalogoModel = new CatalogoModel(122345, "Catalogo", new ProcesosModel(PID, Nombre_Proceso, Usuario, Informacion, 1));
+            //CatalogoModel CatalogoModel = new CatalogoModel(122345, "Catalogo", new ProcesosModel(PID, Nombre_Proceso, Usuario, Informacion, 1));
             modelo.addRow(miTabla);
 
-            String Datos = String.format("idCatalogo %d - Catalogo: %s - PID: %d - Usuario: %s - NomProceso: %s  - Info: %s",
+            /**String Datos = String.format("idCatalogo %d - Catalogo: %s - PID: %d - Usuario: %s - NomProceso: %s  - Info: %s",
                     CatalogoModel.getConsecutivo(), CatalogoModel.getNombreCatalogo(),
                     CatalogoModel.ProcesoModel.getPib(), CatalogoModel.ProcesoModel.getUsuario(),
                     CatalogoModel.ProcesoModel.getNombreProceso(), CatalogoModel.ProcesoModel.getDescripcion());
-            System.out.println(Datos);
+            System.out.println(Datos);**/
         });
 
         return modelo;

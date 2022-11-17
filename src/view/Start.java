@@ -1,6 +1,5 @@
 package view;
 
-
 import controllers.ControllerProceso;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -12,32 +11,32 @@ import javax.swing.JTable;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Isaac
  */
 public class Start extends javax.swing.JFrame {
-Procesar procesar = new Procesar();
-ControllerProceso ControllerProceso = new ControllerProceso();
+
+    Procesar procesar = new Procesar();
+    ControllerProceso ControllerProceso = new ControllerProceso();
 
     public Start() {
         initComponents();
-      tabla.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mousePressed(MouseEvent eve){
-              JTable jtable = (JTable) eve.getSource();
-              Point point = eve.getPoint();
-              int row = jtable.rowAtPoint(point);
-              if(eve.getClickCount() == 1){
-                  String conteo = tabla.getValueAt(tabla.getSelectedRow(),1).toString();
-                  int datoRafaga = conteo.length();
-                  procesar.jTFCapturaRafaga.setText(String.valueOf(datoRafaga));
-                 // txtNombreCatalogo.setText(tabla.getValueAt(tabla.getSelectedRow(),1).toString());
-              }
-          }
-          
-      });
+        tabla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent eve) {
+                JTable jtable = (JTable) eve.getSource();
+                Point point = eve.getPoint();
+                int row = jtable.rowAtPoint(point);
+                if (eve.getClickCount() == 1) {
+                    String conteo = tabla.getValueAt(tabla.getSelectedRow(), 1).toString();
+                    int datoRafaga = conteo.length();
+                    procesar.jTFCapturaRafaga.setText(String.valueOf(datoRafaga));
+                    // txtNombreCatalogo.setText(tabla.getValueAt(tabla.getSelectedRow(),1).toString());
+                }
+            }
+
+        });
     }
 
     /**
@@ -174,23 +173,21 @@ ControllerProceso ControllerProceso = new ControllerProceso();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-      
-    tabla.setModel(ControllerProceso.cargar());
-    /**try {            
-        tabla.setModel(ControllerProceso.cargar());
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, e,"Error al cargar los procesos",JOptionPane.ERROR_MESSAGE);
-    }**/
-   
+        try {
+            tabla.setModel(ControllerProceso.cargar());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error al cargar los procesos", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void JBSimuladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSimuladorActionPerformed
-        
+
         procesar.setVisible(true);
     }//GEN-LAST:event_JBSimuladorActionPerformed
 
     private void BtnPasarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPasarDatosActionPerformed
-        
+
     }//GEN-LAST:event_BtnPasarDatosActionPerformed
 
     /**
