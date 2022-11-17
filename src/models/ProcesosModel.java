@@ -4,41 +4,32 @@ import java.util.Optional;
 
 public class ProcesosModel {
     private long pid;
-    private Optional<String> nombreProceso;
-    private Optional<String> usuario;
-    private Optional<String[]> descripcion;
+    private String nombreProceso;
+    private String usuario;
+    private String descripcion;
     private int prioridad;
 
-    public ProcesosModel(long pid, Optional<String> nombreProceso, Optional<String> nombreUser, Optional<String[]> info, int prioridad) {
-        this.pid = pid;
-        this.nombreProceso = nombreProceso;
-        this.usuario = nombreUser;
-        this.descripcion = info;
-        this.prioridad = prioridad;
-    }
-
     public ProcesosModel() {
-        
-            }
+    }
 
     /**
      * @return int return the pib
      */
-    public long getPib() {
+    public long getPid() {
         return pid;
     }
 
     /**
-     * @param pib the pib to set
+     * @param pid the pib to set
      */
-    public void setPib(long pib) {
-        this.pid = pib;
+    public void setPid(long pid) {
+        this.pid = pid;
     }
 
     /**
      * @return String return the nombreProceso
      */
-    public Optional<String> getNombreProceso() {
+    public String getNombreProceso() {
         return nombreProceso;
     }
 
@@ -46,13 +37,13 @@ public class ProcesosModel {
      * @param nombreProceso the nombreProceso to set
      */
     public void setNombreProceso(Optional<String> nombreProceso) {
-        this.nombreProceso = nombreProceso;
+        this.nombreProceso = (nombreProceso.toString().equals("Optional.empty")) ? "System-Process-" + getPid() : nombreProceso.toString().replace("Optional.", "").replace("Optional", "");
     }
 
     /**
      * @return String return the usuario
      */
-    public Optional<String> getUsuario() {
+    public String getUsuario() {
         return usuario;
     }
 
@@ -60,20 +51,20 @@ public class ProcesosModel {
      * @param usuario the usuario to set
      */
     public void setUsuario(Optional<String>  usuario) {
-        this.usuario = usuario;
+        this.usuario = (usuario.toString().equals("Optional.empty")) ? "System" : usuario.toString().replace("Optional.", "").replace("Optional", "");;
     }
 
     /**
      * @return String return the descripcion
      */
-    public Optional<String[]> getDescripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 
     /**
      * @param descripcion the descripcion to set
      */
-    public void setDescripcion(Optional<String[]> descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
@@ -87,8 +78,8 @@ public class ProcesosModel {
     /**
      * @param prioridad the prioridad to set
      */
-    public void setPrioridad(int prioridad) {
-        this.prioridad = prioridad;
+    public void setPrioridad(Optional<String> prioridad) {
+        this.prioridad = (prioridad.toString().replace("Optional.", "").replace("Optional", "").equals("empty") || prioridad.toString().replace("Optional.", "").replace("Optional", "").equals("root")) ? 1 : 0;
     }
 
 }

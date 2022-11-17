@@ -3,17 +3,11 @@ package models;
 public class CatalogoModel {
     private int consecutivo;
     private String nombreCatalogo;
-    public ProcesosModel ProcesoModel;
+    public ProcesosModel ProcesosModel = new ProcesosModel();
 
-    public CatalogoModel(
-            int consecutivo,
-            String nombreCatalogo, ProcesosModel pm) {
-        this.consecutivo = consecutivo;
-        this.nombreCatalogo = nombreCatalogo;
-        this.ProcesoModel = pm;
+    public CatalogoModel() {
     }
     
-    public CatalogoModel(){}
 
     /**
      * @return int return the consecutivo

@@ -32,7 +32,6 @@ public class Start extends javax.swing.JFrame {
                     String conteo = tabla.getValueAt(tabla.getSelectedRow(), 1).toString();
                     int datoRafaga = conteo.length();
                     procesar.jTFCapturaRafaga.setText(String.valueOf(datoRafaga));
-                    // txtNombreCatalogo.setText(tabla.getValueAt(tabla.getSelectedRow(),1).toString());
                 }
             }
 
@@ -158,6 +157,7 @@ public class Start extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -166,11 +166,14 @@ public class Start extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-       if(txtNombreCatalogo.getText().equals("")){
-           JOptionPane.showMessageDialog(rootPane, "Ingrese un nombre de catalogo", "Warning",JOptionPane.WARNING_MESSAGE);
-       }else{
-            try {
-            tabla.setModel(ControllerProceso.cargar());
+
+        try {
+            if (txtNombreCatalogo.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor colocar nombre al catalogo", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                tabla.setModel(ControllerProceso.cargar(txtNombreCatalogo.getText()));
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error al cargar los procesos", JOptionPane.ERROR_MESSAGE);
         }
@@ -182,6 +185,7 @@ public class Start extends javax.swing.JFrame {
 
         procesar.setVisible(true);
     }//GEN-LAST:event_JBSimuladorActionPerformed
+
 
     private void BtnPasarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPasarDatosActionPerformed
 

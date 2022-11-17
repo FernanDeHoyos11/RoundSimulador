@@ -1,44 +1,43 @@
 package controllers;
 
-import java.util.Optional;
+import connect.Consultas;
 import javax.swing.table.DefaultTableModel;
 import models.CatalogoModel;
-import models.ProcesosModel;
 
 public class ControllerProceso {
 
-    public long PID;
-    public Optional<String> Usuario;
-    public Optional<String> Nombre_Proceso;
-    public Optional<String[]> Informacion;
+    Consultas c = new Consultas();
+    CatalogoModel CatalogoModel = new CatalogoModel();
 
-    public DefaultTableModel cargar() {
-        String[] titulos = {"Pid", "Procesos", "Usuarios", "Informacio","Prioridad"};
+    public DefaultTableModel cargar(String txtNombreCatalogo) {
+        c.GuardarCatalogo(txtNombreCatalogo);
+        String[] titulos = {"Pid", "Procesos", "Usuarios", "Descripción", "Prioridad"};
         Object[] miTabla = new Object[5];
         DefaultTableModel modelo = new DefaultTableModel(null, titulos);
+        int Consecutivo = Integer.parseInt(c.Consecutivo());
 
+        //.filter(ProcessHandle::isAlive) sacar los procesos activos solamente
         ProcessHandle.allProcesses().forEach(p -> {
-            PID = p.pid();
-            Usuario = p.info().user();
-            Nombre_Proceso = p.info().command();
-            String proces = Nombre_Proceso.toString();
-            Informacion = p.info().arguments();
 
-            miTabla[0] = PID;
-            miTabla[1] = proces.replace("Optional.", "").replace("Optional", "");
-            miTabla[2] = Usuario.toString().replace("Optional.", "").replace("Optional", "");
-            miTabla[3] = Informacion;
-            miTabla[4] = (Usuario.toString().replace("Optional.", "").replace("Optional", "").equals("empty")  || Usuario.toString().replace("Optional.", "").replace("Optional", "").equals("[root]"))?1:0;
-            //CatalogoModel CatalogoModel = new CatalogoModel(122345, "Catalogo", new ProcesosModel(PID, Nombre_Proceso, Usuario, Informacion, 1));
+            CatalogoModel.setConsecutivo(Consecutivo);
+            CatalogoModel.setNombreCatalogo(txtNombreCatalogo);
+            CatalogoModel.ProcesosModel.setPid(p.pid());
+            CatalogoModel.ProcesosModel.setNombreProceso(p.info().command());
+            CatalogoModel.ProcesosModel.setUsuario(p.info().user());
+            CatalogoModel.ProcesosModel.setDescripcion("IsAlive: " + p.isAlive() + ", Children Count: " + p.children().count());
+            CatalogoModel.ProcesosModel.setPrioridad(p.info().user());
+
+            miTabla[0] = CatalogoModel.ProcesosModel.getPid();
+            miTabla[1] = CatalogoModel.ProcesosModel.getNombreProceso();
+            miTabla[2] = CatalogoModel.ProcesosModel.getUsuario();
+            miTabla[3] = CatalogoModel.ProcesosModel.getDescripcion();
+            miTabla[4] = CatalogoModel.ProcesosModel.getPrioridad();
             modelo.addRow(miTabla);
-
-            /**String Datos = String.format("idCatalogo %d - Catalogo: %s - PID: %d - Usuario: %s - NomProceso: %s  - Info: %s",
-                    CatalogoModel.getConsecutivo(), CatalogoModel.getNombreCatalogo(),
-                    CatalogoModel.ProcesoModel.getPib(), CatalogoModel.ProcesoModel.getUsuario(),
-                    CatalogoModel.ProcesoModel.getNombreProceso(), CatalogoModel.ProcesoModel.getDescripcion());
-            System.out.println(Datos);**/
+            
+            c.GuardarProcesos(CatalogoModel.ProcesosModel.getPid(), CatalogoModel.ProcesosModel.getNombreProceso(), CatalogoModel.ProcesosModel.getUsuario(), CatalogoModel.ProcesosModel.getDescripcion(), CatalogoModel.ProcesosModel.getPrioridad(), CatalogoModel.getConsecutivo());
         });
 
         return modelo;
     }
+
 }
