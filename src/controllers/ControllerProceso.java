@@ -28,7 +28,7 @@ public class ControllerProceso {
             miTabla[1] = proces.replace("Optional.", "").replace("Optional", "");
             miTabla[2] = Usuario.toString().replace("Optional.", "").replace("Optional", "");
             miTabla[3] = Informacion;
-            miTabla[4] = (Usuario.toString().replace("Optional.", "").replace("Optional", "").equals("empty") || Usuario.toString().replace("Optional.", "").replace("Optional", "").equals("root"))?1:0;
+            miTabla[4] = (Usuario.toString().replace("Optional.", "").replace("Optional", "").equals("empty")  || Usuario.toString().replace("Optional.", "").replace("Optional", "").equals("[root]"))?1:0;
             //CatalogoModel CatalogoModel = new CatalogoModel(122345, "Catalogo", new ProcesosModel(PID, Nombre_Proceso, Usuario, Informacion, 1));
             modelo.addRow(miTabla);
 
