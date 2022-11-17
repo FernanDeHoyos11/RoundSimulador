@@ -32,7 +32,6 @@ public class Start extends javax.swing.JFrame {
                     String conteo = tabla.getValueAt(tabla.getSelectedRow(), 1).toString();
                     int datoRafaga = conteo.length();
                     procesar.jTFCapturaRafaga.setText(String.valueOf(datoRafaga));
-                    // txtNombreCatalogo.setText(tabla.getValueAt(tabla.getSelectedRow(),1).toString());
                 }
             }
 
@@ -161,7 +160,11 @@ public class Start extends javax.swing.JFrame {
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         try {
-            tabla.setModel(ControllerProceso.cargar());
+            if (txtNombreCatalogo.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Por favor colocar nombre al catalogo", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                tabla.setModel(ControllerProceso.cargar(txtNombreCatalogo.getText()));
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error al cargar los procesos", JOptionPane.ERROR_MESSAGE);
         }

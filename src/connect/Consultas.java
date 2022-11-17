@@ -16,8 +16,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Consultas {
-    Connect objConexion = new Connect();
 
+    Connect objConexion = new Connect();
 
     public void GuardarCatalogo(String Nombre) {
         try {
@@ -25,7 +25,7 @@ public class Consultas {
             Connection conn = objConexion.conexion();
             // Statement nos sirve para enviar las instrucciones a la bd
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO Catalogo(id, nombre) VALUES ( null,'" + Nombre +"');");
+            stmt.executeUpdate("INSERT INTO Catalogo(id, nombre) VALUES ( null,'" + Nombre + "');");
             System.out.println("Catalogo agregado");
             conn.close();
         } catch (SQLException e) {
@@ -33,14 +33,27 @@ public class Consultas {
             System.out.println(e.getMessage());
         }
     }
-    
-    public String Consecutivo(){
+
+    public void GuardarProcesos(long pid, String nombre, String usuario, String descripcion, int prioridad, int idcatalogo) {
+        try {
+            Connection conn = objConexion.conexion();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("INSERT INTO Procesos(pid,nombre,usuario,descripcion,prioridad,idcatalogo) VALUES "
+                    + "(" + pid + ",'" + nombre + "','" + usuario + "','" + descripcion + "'," + prioridad + "," + idcatalogo + ");");
+            System.out.println("Proceso agregado");
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public String Consecutivo() {
         String consecutivo = "";
         try {
             Connection conn = objConexion.conexion();
             PreparedStatement ps = conn.prepareStatement(" SELECT * FROM 'Catalogo' WHERE id = (SELECT MAX(id) FROM 'Catalogo'); ");
             ResultSet result = ps.executeQuery();
-            consecutivo = result.getString(1)+" "+result.getString(2);
+            consecutivo = result.getString(1);
             conn.close();
         } catch (Exception e) {
             // TODO: handle exception

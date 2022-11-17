@@ -3,7 +3,7 @@ package models;
 public class CatalogoModel {
     private int consecutivo;
     private String nombreCatalogo;
-    public ProcesosModel ProcesoModel;
+    public ProcesosModel ProcesosModel = new ProcesosModel();
 
     public CatalogoModel() {
     }
