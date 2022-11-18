@@ -12,6 +12,15 @@ public class ProcesosModel {
     public ProcesosModel() {
     }
 
+    public ProcesosModel(long pid, String nombreProceso, String usuario, String descripcion, int prioridad) {
+        this.pid = pid;
+        this.nombreProceso = nombreProceso;
+        this.usuario = usuario;
+        this.descripcion = descripcion;
+        this.prioridad = prioridad;
+    }
+    
+
     /**
      * @return int return the pib
      */

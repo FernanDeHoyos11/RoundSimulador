@@ -8,7 +8,18 @@ public class CatalogoModel {
     public CatalogoModel() {
     }
     
-
+    public CatalogoModel(int consecutivo, String nombreCatalogo) {
+        this.consecutivo = consecutivo;
+        this.nombreCatalogo = nombreCatalogo;
+    }
+    
+    
+    public CatalogoModel(int consecutivo, String nombreCatalogo, ProcesosModel ProcesosModel) {
+        this.consecutivo = consecutivo;
+        this.nombreCatalogo = nombreCatalogo;
+        this.ProcesosModel = ProcesosModel;
+    }
+    
     /**
      * @return int return the consecutivo
      */

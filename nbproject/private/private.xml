@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/HP/ingeneria_de_sistemas/Sistemas_Operativos/RoundSimulador/src/models/ProcesosModel.java</file>
+            <file>file:/E:/HP/ingeneria_de_sistemas/Sistemas_Operativos/RoundSimulador/src/view/Start.java</file>
+            <file>file:/E:/HP/ingeneria_de_sistemas/Sistemas_Operativos/RoundSimulador/src/controllers/ControllerProceso.java</file>
+            <file>file:/E:/HP/ingeneria_de_sistemas/Sistemas_Operativos/RoundSimulador/src/view/Procesar.java</file>
+            <file>file:/E:/HP/ingeneria_de_sistemas/Sistemas_Operativos/RoundSimulador/src/connect/Consultas.java</file>
+            <file>file:/E:/HP/ingeneria_de_sistemas/Sistemas_Operativos/RoundSimulador/src/connect/Connect.java</file>
+            <file>file:/E:/HP/ingeneria_de_sistemas/Sistemas_Operativos/RoundSimulador/src/models/CatalogoModel.java</file>
+        </group>
     </open-files>
 </project-private>

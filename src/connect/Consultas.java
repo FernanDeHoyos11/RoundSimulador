@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import models.CatalogoModel;
+import models.ProcesosModel;
 
 public class Consultas {
 
@@ -38,8 +40,8 @@ public class Consultas {
         try {
             Connection conn = objConexion.conexion();
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO Procesos(pid,nombre,usuario,descripcion,prioridad,idcatalogo) VALUES "
-                    + "(" + pid + ",'" + nombre + "','" + usuario + "','" + descripcion + "'," + prioridad + "," + idcatalogo + ");");
+            stmt.executeUpdate("INSERT INTO Procesos(id,pid,nombre,usuario,descripcion,prioridad,idcatalogo) VALUES "
+                    + "(null," + pid + ",'" + nombre + "','" + usuario + "','" + descripcion + "'," + prioridad + "," + idcatalogo + ");");
             System.out.println("Proceso agregado");
             conn.close();
         } catch (Exception e) {
@@ -60,5 +62,73 @@ public class Consultas {
             System.out.println(e.getMessage());
         }
         return consecutivo;
+    }
+
+    public int ObtenerConsecutivo(String nombre) {
+        int consecutivo = 0;
+        try {
+            Connection conn = objConexion.conexion();
+            PreparedStatement ps = conn.prepareStatement("SELECT id FROM Catalogo WHERE nombre = '" + nombre + "';");
+            ResultSet result = ps.executeQuery();
+            consecutivo = result.getInt(1);
+            conn.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+        }
+        return consecutivo;
+    }
+
+    public CatalogoModel[] consultaCargar(String sql) {
+        String Consulta = sql;
+        CatalogoModel Array[] = null;
+        try {
+            Connection conn = objConexion.conexion();
+            Statement stmt = conn.createStatement();
+            // Clase ResultSet es donde guardamos el resultado de la consulta
+            ResultSet result = stmt.executeQuery(Consulta);
+            // Analiza la estructura de un consulta para averiguar cuántas columnas tiene,
+            // los nombres de las columnas, el tipo de dato etc.
+            ResultSetMetaData rsmd = result.getMetaData();
+            int numColumna = rsmd.getColumnCount();
+            Array = new CatalogoModel[numColumna];
+
+            int aux = 0;
+            while (result.next()) {
+                if (aux < numColumna) {
+                    Array[aux] = new CatalogoModel(result.getInt("id"), result.getString("nombre"));
+                }
+                aux++;
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Array;
+    }
+
+    public CatalogoModel[] consultarProcesos( int id, String nombreCatalogo) {
+        CatalogoModel Array[] = null;
+        try {
+            Connection conn = objConexion.conexion();
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery("SELECT *  from Procesos WHERE Procesos.idcatalogo = "+id+";");
+            ResultSetMetaData rsmd = result.getMetaData();
+            int numColumna = rsmd.getColumnCount();
+            Array = new CatalogoModel[numColumna];
+            
+            int aux = 0;
+            while (result.next()) {
+                ProcesosModel procesosModel = new ProcesosModel(result.getInt(2), result.getString(3),result.getString(4),result.getString(5),result.getInt(6));
+                if (aux < numColumna) {
+                    Array[aux] = new CatalogoModel(id,nombreCatalogo,procesosModel);
+                }
+                aux++;
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Array;
     }
 }

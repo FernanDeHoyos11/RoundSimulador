@@ -1,19 +1,14 @@
 package connect;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.DriverManager;
 
 public class Connect {
-    //String barra = File.separator;
-    //String ubicacion = System.getProperty("user.dir") + barra + "db" + barra;
-    //File contenedor = new File(ubicacion);
-    //File medicos[] = contenedor.listFiles();
     public Connection conexion(){
         //Ruta donde está la bd creada
 
-        String url = "jdbc:sqlite:C:\\Users\\JoseAlejandroGonzale\\Documents\\GitHub\\RoundSimulador\\src\\db\\procesos.db";
+        String url = "jdbc:sqlite:E:\\HP\\ingeneria_de_sistemas\\Sistemas_Operativos\\RoundSimulador\\src\\db\\procesos.db";
 
         Connection conn = null;
         try{
