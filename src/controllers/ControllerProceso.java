@@ -14,7 +14,7 @@ public class ControllerProceso {
         String[] titulos = {"Pid", "Procesos", "Usuarios", "Descripción", "Prioridad"};
         Object[] miTabla = new Object[5];
         DefaultTableModel modelo = new DefaultTableModel(null, titulos);
-        int Consecutivo = Integer.parseInt(c.Consecutivo());
+        int Consecutivo = c.Consecutivo();
 
         //.filter(ProcessHandle::isAlive) sacar los procesos activos solamente
         ProcessHandle.allProcesses().forEach(p -> {

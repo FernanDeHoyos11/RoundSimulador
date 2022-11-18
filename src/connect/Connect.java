@@ -8,15 +8,16 @@ public class Connect {
     
     public Connection conexion(){
         //Ruta donde está la bd creada
-        String url = "jdbc:sqlite:E:/HP/ingeneria_de_sistemas/Sistemas_Operativos/RoundSimulador/src/db/procesos.db";
+        String url = "jdbc:mysql://db4free.net:3306/simulador";
 
         Connection conn = null;
         try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
             //Creamos la conexión
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url,"cuasingenieros", "Sonicboom4071!");
             System.out.println("Conexión establecida");
 
-        }catch(SQLException e){
+        }catch(ClassNotFoundException|SQLException e){
             System.out.println(e.getMessage());
         }
         return conn;

@@ -25,12 +25,12 @@ public class Consultas {
             Connection conn = objConexion.conexion();
             // Statement nos sirve para enviar las instrucciones a la bd
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO Catalogo(id, nombre) VALUES ( null,'" + Nombre + "');");
+            stmt.executeUpdate("INSERT INTO catalogo(id, nombrecatalogo) VALUES ( null,'" + Nombre + "');");
             System.out.println("Catalogo agregado");
             conn.close();
         } catch (SQLException e) {
             // TODO: handle exception
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "error guardar catalogo");
         }
     }
 
@@ -38,26 +38,26 @@ public class Consultas {
         try {
             Connection conn = objConexion.conexion();
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO Procesos(pid,nombre,usuario,descripcion,prioridad,idcatalogo) VALUES "
-                    + "(" + pid + ",'" + nombre + "','" + usuario + "','" + descripcion + "'," + prioridad + "," + idcatalogo + ");");
+            stmt.executeUpdate("INSERT INTO procesos(id,pid,nombre,usuario,descripcion,prioridad,idcatalogo) VALUES "
+                    + "(null," + pid + ",'" + nombre + "','" + usuario + "','" + descripcion + "'," + prioridad + "," + idcatalogo + ");");
             System.out.println("Proceso agregado");
             conn.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "error guardar");
         }
     }
 
-    public String Consecutivo() {
-        String consecutivo = "";
+    public int Consecutivo() {
+        int consecutivo = 0;
         try {
             Connection conn = objConexion.conexion();
-            PreparedStatement ps = conn.prepareStatement(" SELECT * FROM 'Catalogo' WHERE id = (SELECT MAX(id) FROM 'Catalogo'); ");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM catalogo WHERE id = (SELECT MAX(id) FROM catalogo);");
             ResultSet result = ps.executeQuery();
-            consecutivo = result.getString(1);
+            consecutivo = Integer.parseInt(result.getString(1));
             conn.close();
         } catch (Exception e) {
             // TODO: handle exception
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "error seleccion catalogo");
         }
         return consecutivo;
     }
