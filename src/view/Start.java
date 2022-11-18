@@ -178,7 +178,6 @@ public class Start extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e, "Error al cargar los procesos", JOptionPane.ERROR_MESSAGE);
         }
 
-       }
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void JBSimuladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSimuladorActionPerformed
