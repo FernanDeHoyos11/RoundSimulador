@@ -7,8 +7,8 @@ import java.sql.DriverManager;
 public class Connect {
     public Connection conexion(){
         //Ruta donde está la bd creada
-
-        String url = "jdbc:sqlite:E:\\HP\\ingeneria_de_sistemas\\Sistemas_Operativos\\RoundSimulador\\src\\db\\procesos.db";
+        String url = "jdbc:sqlite:C:\\Users\\JoseAlejandroGonzale\\Documents\\GitHub\\RoundSimulador\\src\\db\\procesos.db";
+        //String url = "jdbc:sqlite:E:\\HP\\ingeneria_de_sistemas\\Sistemas_Operativos\\RoundSimulador\\src\\db\\procesos.db";
 
         Connection conn = null;
         try{
