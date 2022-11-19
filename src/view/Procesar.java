@@ -11,6 +11,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -47,6 +49,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
         jTFinal.setBackground(Color.GREEN);
         hilo = new Thread(this);
         txtPid.setVisible(false);
+        this.setLocation(730, 105);
     }
 
     /**
@@ -83,8 +86,8 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
         jLNumeroProceso = new javax.swing.JLabel();
         Bpausar = new javax.swing.JToggleButton();
         btnReanudar = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
         txtPid = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -218,14 +221,14 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
             }
         });
 
-        jButton1.setText("Grafica");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtPid.setEditable(false);
+
+        jButton2.setText("Grafica");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-
-        txtPid.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -284,8 +287,8 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                                 .addComponent(CanTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 11, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(198, 198, 198)
-                .addComponent(jButton1)
+                .addGap(227, 227, 227)
+                .addComponent(jButton2)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -308,8 +311,8 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
@@ -325,10 +328,10 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CanTiempo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         pack();
@@ -403,31 +406,33 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
         continuar();
     }//GEN-LAST:event_btnReanudarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        XYSeries series = new XYSeries("Procesos");
-
-        for (int i = 0; i < jTFinal.getRowCount(); i++) {
-            series.add(Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 0))), Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 3))));
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        renderer.setSeriesPaint(0, Color.ORANGE);
+        
+         for (int i = 0; i < jTFinal.getRowCount(); i++) {
+             float x = Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 0)));
+             float y = Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 3)));
+              dataset.addValue(y, "Procesos","Proceso " + String.valueOf(x));
         }
         
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Grafica", // Título
-                "Procesos", // Etiqueta Coordenada X
-                "Tiempo ms", // Etiqueta Coordenada Y
-                dataset, // Datos
-                PlotOrientation.VERTICAL,
-                true,
-                false,
-                false
-        );
-        // Mostramos la grafica en pantalla
-        ChartFrame frame = new ChartFrame("Ejemplo Grafica Lineal", chart);
-        frame.setSize(400, 400);
-        frame.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+           JFreeChart chart = ChartFactory.createLineChart(
+    "Grafica Lineal", // Titulo
+    "procesos", // Etiqueta de datos
+    "Tiempo en ms", // Etiqueta de valores
+    dataset, // Datos
+    PlotOrientation.VERTICAL, // orientacion
+    false, // Incluye leyenda
+    true, // Incluye tooltips
+    false // urls
+    );
+           
+             ChartFrame frame = new ChartFrame("Graficador", chart);
+             frame.setLocation(400, 100);
+    frame.setSize(500, 500);
+    frame.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -607,7 +612,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
     private javax.swing.JToggleButton btnReanudar;
     private javax.swing.JButton jBAgregar;
     private javax.swing.JButton jBIniciar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLNumeroProceso;
     private javax.swing.JLabel jLPorcentajeProceso;
     private javax.swing.JLabel jLabel1;
@@ -623,7 +628,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
     private javax.swing.JScrollPane jScrollPane4;
     public javax.swing.JTextField jTFCapturaQuantum;
     public javax.swing.JTextField jTFCapturaRafaga;
-    private javax.swing.JTable jTFinal;
+    public javax.swing.JTable jTFinal;
     private javax.swing.JTable jTIngreso;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;

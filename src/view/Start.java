@@ -28,6 +28,8 @@ public class Start extends javax.swing.JFrame implements ItemListener {
     ControllerProceso ControllerProceso = new ControllerProceso();
 
     public Start() {
+        
+        this.setLocation(116, 80);
         initComponents();
         addWindowListener(new WindowAdapter() {
             @Override
@@ -168,6 +170,12 @@ public class Start extends javax.swing.JFrame implements ItemListener {
         tabla.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(tabla);
 
+        ComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Puede seleccionar un catalogo existente");
         setJMenuBar(jMenuBar1);
 
@@ -246,6 +254,10 @@ public class Start extends javax.swing.JFrame implements ItemListener {
     private void txtNombreCatalogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCatalogoActionPerformed
 
     }//GEN-LAST:event_txtNombreCatalogoActionPerformed
+
+    private void ComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxActionPerformed
+         
+    }//GEN-LAST:event_ComboBoxActionPerformed
 
     /**
      * @param args the command line arguments

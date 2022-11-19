@@ -88,7 +88,7 @@ public class ProcesosModel {
      * @param prioridad the prioridad to set
      */
     public void setPrioridad(Optional<String> prioridad) {
-        this.prioridad = (prioridad.toString().replace("Optional.", "").replace("Optional", "").equals("empty") || prioridad.toString().replace("Optional.", "").replace("Optional", "").equals("root")) ? 1 : 0;
+        this.prioridad = (prioridad.toString().replace("Optional.", "").replace("Optional", "").equals("empty") || prioridad.toString().replace("Optional.", "").replace("Optional", "").equals("[root]")) ? 1 : 0;
     }
 
 }
