@@ -41,6 +41,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
      * Creates new form Procesar
      */
     public Procesar() {
+         this.setLocation(700, 100);
         initComponents();
         jTIngreso.setBackground(Color.CYAN);
         jTIngreso.setForeground(Color.blue);
@@ -418,6 +419,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
         // Mostramos la grafica en pantalla
         ChartFrame frame = new ChartFrame("Ejemplo Grafica Lineal", chart);
         frame.setSize(400, 400);
+        frame.setLocation(430, 219);
         frame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -31,8 +31,7 @@ public class Consultas {
             System.out.println("Catalogo agregado");
             conn.close();
         } catch (SQLException e) {
-            // TODO: handle exception
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "Error al guardar catalogo");
         }
     }
 
@@ -45,7 +44,7 @@ public class Consultas {
             System.out.println("Proceso agregado");
             conn.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()+ "Error al guardar procesos");
         }
     }
 
