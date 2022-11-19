@@ -11,6 +11,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -406,24 +407,26 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
-        XYSeries series = new XYSeries("Procesos");
-
+      
+       DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
         for (int i = 0; i < jTFinal.getRowCount(); i++) {
-            series.add(Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 0))), Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 3))));
+            float x = Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 0)));
+             float y = Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 3)));
+            dataset.addValue(y, "Procesos",  "Procesos: "+ String.valueOf(x));
         }
         
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Grafica", // Título
-                "Procesos", // Etiqueta Coordenada X
-                "Tiempo ms", // Etiqueta Coordenada Y
-                dataset, // Datos
-                PlotOrientation.VERTICAL,
-                true,
-                false,
-                false
-        );
+
+    JFreeChart chart = ChartFactory.createLineChart(
+    "Grafica Lineal", // Titulo
+    "Procesos", // Etiqueta de datos
+    "Tiempo", // Etiqueta de valores
+    dataset, // Datos
+    PlotOrientation.VERTICAL, // orientacion
+    false, // Incluye leyenda
+    true, // Incluye tooltips
+    false // urls
+    );
+
         // Mostramos la grafica en pantalla
         ChartFrame frame = new ChartFrame("Ejemplo Grafica Lineal", chart);
         frame.setSize(400, 400);
