@@ -414,7 +414,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
          for (int i = 0; i < jTFinal.getRowCount(); i++) {
              float x = Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 0)));
              float y = Float.parseFloat(String.valueOf(jTFinal.getValueAt(i, 3)));
-              dataset.addValue(y, "Procesos","Proceso " + String.valueOf(x));
+              dataset.addValue(y, "Procesos","Proceso: " + String.valueOf(x));
         }
         
            JFreeChart chart = ChartFactory.createLineChart(
