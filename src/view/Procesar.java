@@ -444,17 +444,17 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                         Cargar(i);
                         if (ResiduoRafaga != 0 && ResiduoRafaga > Quantum) { //Ejecutando Procesos
                             for (int c = 1; c <= Quantum; c++) {
-                                jTIngreso.setValueAt("Procesando", i, 4);
+                                jTIngreso.setValueAt("Procesando", i, 5);
                                 ResiduoRafaga--;
                                 Barra(Rafaga, ResiduoRafaga);
                                 Pintar();
-                                jTIngreso.setValueAt(String.valueOf(ResiduoRafaga), i, 3);
+                                jTIngreso.setValueAt(String.valueOf(ResiduoRafaga), i, 4);
                                 TiempoProceso++;
                                 Dormir();
                             }
-                            jTIngreso.setValueAt("Espera", i, 4);
+                            jTIngreso.setValueAt("Espera", i, 5);
                             if (ResiduoRafaga == 0) {
-                                jTIngreso.setValueAt("Terminado", i, 4);
+                                jTIngreso.setValueAt("Terminado", i, 5);
                                 Pintar();
                                 Informe(i);
                                 Borrar(i);
@@ -463,17 +463,17 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                         } else {
                             if (ResiduoRafaga > 0 && Quantum != 0) {
                                 while (ResiduoRafaga > 0) {
-                                    jTIngreso.setValueAt("Procesando", i, 4);
+                                    jTIngreso.setValueAt("Procesando", i, 5);
                                     ResiduoRafaga--;
                                     Barra(Rafaga, ResiduoRafaga);
                                     Pintar();
-                                    jTIngreso.setValueAt(String.valueOf(ResiduoRafaga), i, 3);
+                                    jTIngreso.setValueAt(String.valueOf(ResiduoRafaga), i, 4);
                                     TiempoProceso++;
                                     Dormir();
                                 }
-                                jTIngreso.setValueAt("Espera", i, 4);
+                                jTIngreso.setValueAt("Espera", i, 5);
                                 if (ResiduoRafaga == 0 && Quantum != 0) {
-                                    jTIngreso.setValueAt("Terminado", i, 4);
+                                    jTIngreso.setValueAt("Terminado", i, 5);
                                     Pintar();
                                     Informe(i);
                                     Borrar(i);
@@ -481,7 +481,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                                 }
                             } else {
                                 if (ResiduoRafaga == 0 && Quantum != 0) {
-                                    jTIngreso.setValueAt("Terminado", i, 4);
+                                    jTIngreso.setValueAt("Terminado", i, 5);
                                     Pintar();
                                     Informe(i);
                                     Borrar(i);
@@ -521,9 +521,9 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
 
     public void Cargar(int i) { //Carga los valores de la Tabla
         NProceso = (int) jTIngreso.getValueAt(i, 0);
-        Rafaga = parseInt((String) (jTIngreso.getValueAt(i, 1)));
-        Quantum = parseInt((String) (jTIngreso.getValueAt(i, 2)));
-        ResiduoRafaga = parseInt((String) (jTIngreso.getValueAt(i, 3)));
+        Rafaga = parseInt((String) (jTIngreso.getValueAt(i, 2)));
+        Quantum = parseInt((String) (jTIngreso.getValueAt(i, 3)));
+        ResiduoRafaga = parseInt((String) (jTIngreso.getValueAt(i, 4)));
         if (NProceso > 0) {
             jLNumeroProceso.setText(String.valueOf(NProceso));
         }
@@ -568,10 +568,10 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
 
     public void Borrar(int c) { //Elimina los registros de la tabla procesos
         jTIngreso.setValueAt(0, c, 0);
-        jTIngreso.setValueAt("0", c, 1);
         jTIngreso.setValueAt("0", c, 2);
         jTIngreso.setValueAt("0", c, 3);
-        jTIngreso.setValueAt("Terminado", c, 4);
+        jTIngreso.setValueAt("0", c, 4);
+        jTIngreso.setValueAt("Terminado", c, 5);
     }
 
     public void Barra(int rafaga, int residuo) { //Calcula porcentaje de la barra y su progreso
