@@ -9,7 +9,7 @@ public class Connect {
     public Connection conexion(){
         //Ruta donde está la bd creada
         String barra = File.separator;
-       String ubicacion = System.getProperty("user.dir") + barra + "src" + barra + "db"  + barra + "procesos.db";
+        String ubicacion = System.getProperty("user.dir") + barra + "src" + barra + "db"  + barra + "procesos.db";
         String url = "jdbc:sqlite:"+ ubicacion;
         System.out.println(ubicacion);
         Connection conn = null;

@@ -50,7 +50,9 @@ public class Start extends javax.swing.JFrame implements ItemListener {
                 if (eve.getClickCount() == 1) {
                     String conteo = tabla.getValueAt(tabla.getSelectedRow(), 1).toString();
                     int datoRafaga = conteo.length();
+                    String pid = tabla.getValueAt(tabla.getSelectedRow(), 0).toString();
                     procesar.jTFCapturaRafaga.setText(String.valueOf(datoRafaga));
+                    procesar.txtPid.setText(String.valueOf(pid));
                 }
             }
 
@@ -229,6 +231,8 @@ public class Start extends javax.swing.JFrame implements ItemListener {
                 JOptionPane.showMessageDialog(null, "Por favor colocar nombre al catalogo", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 tabla.setModel(ControllerProceso.cargar(txtNombreCatalogo.getText()));
+                ComboBox.removeAllItems();
+                llenarCombo();
             }
 
         } catch (Exception e) {

@@ -47,6 +47,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
         jTIngreso.setForeground(Color.blue);
         jTFinal.setBackground(Color.GREEN);
         hilo = new Thread(this);
+        txtPid.setVisible(false);
     }
 
     /**
@@ -84,6 +85,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
         Bpausar = new javax.swing.JToggleButton();
         btnReanudar = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
+        txtPid = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -128,7 +130,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
 
             },
             new String [] {
-                "#Proceso", "Rafaga", "Quantum", "ResiduoRafaga", "Estado"
+                "#Proceso", "PID", "Rafaga", "Quantum", "ResiduoRafaga", "Estado"
             }
         ));
         jScrollPane3.setViewportView(jTIngreso);
@@ -224,6 +226,8 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
             }
         });
 
+        txtPid.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -252,6 +256,8 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtPid, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(153, 153, 153))
                     .addGroup(layout.createSequentialGroup()
@@ -299,7 +305,9 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                     .addComponent(Bpausar)
                     .addComponent(btnReanudar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -438,17 +446,17 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                         Cargar(i);
                         if (ResiduoRafaga != 0 && ResiduoRafaga > Quantum) { //Ejecutando Procesos
                             for (int c = 1; c <= Quantum; c++) {
-                                jTIngreso.setValueAt("Procesando", i, 4);
+                                jTIngreso.setValueAt("Procesando", i, 5);
                                 ResiduoRafaga--;
                                 Barra(Rafaga, ResiduoRafaga);
                                 Pintar();
-                                jTIngreso.setValueAt(String.valueOf(ResiduoRafaga), i, 3);
+                                jTIngreso.setValueAt(String.valueOf(ResiduoRafaga), i, 4);
                                 TiempoProceso++;
                                 Dormir();
                             }
-                            jTIngreso.setValueAt("Espera", i, 4);
+                            jTIngreso.setValueAt("Espera", i, 5);
                             if (ResiduoRafaga == 0) {
-                                jTIngreso.setValueAt("Terminado", i, 4);
+                                jTIngreso.setValueAt("Terminado", i, 5);
                                 Pintar();
                                 Informe(i);
                                 Borrar(i);
@@ -457,17 +465,17 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                         } else {
                             if (ResiduoRafaga > 0 && Quantum != 0) {
                                 while (ResiduoRafaga > 0) {
-                                    jTIngreso.setValueAt("Procesando", i, 4);
+                                    jTIngreso.setValueAt("Procesando", i, 5);
                                     ResiduoRafaga--;
                                     Barra(Rafaga, ResiduoRafaga);
                                     Pintar();
-                                    jTIngreso.setValueAt(String.valueOf(ResiduoRafaga), i, 3);
+                                    jTIngreso.setValueAt(String.valueOf(ResiduoRafaga), i, 4);
                                     TiempoProceso++;
                                     Dormir();
                                 }
-                                jTIngreso.setValueAt("Espera", i, 4);
+                                jTIngreso.setValueAt("Espera", i, 5);
                                 if (ResiduoRafaga == 0 && Quantum != 0) {
-                                    jTIngreso.setValueAt("Terminado", i, 4);
+                                    jTIngreso.setValueAt("Terminado", i, 5);
                                     Pintar();
                                     Informe(i);
                                     Borrar(i);
@@ -475,7 +483,7 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
                                 }
                             } else {
                                 if (ResiduoRafaga == 0 && Quantum != 0) {
-                                    jTIngreso.setValueAt("Terminado", i, 4);
+                                    jTIngreso.setValueAt("Terminado", i, 5);
                                     Pintar();
                                     Informe(i);
                                     Borrar(i);
@@ -515,9 +523,9 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
 
     public void Cargar(int i) { //Carga los valores de la Tabla
         NProceso = (int) jTIngreso.getValueAt(i, 0);
-        Rafaga = parseInt((String) (jTIngreso.getValueAt(i, 1)));
-        Quantum = parseInt((String) (jTIngreso.getValueAt(i, 2)));
-        ResiduoRafaga = parseInt((String) (jTIngreso.getValueAt(i, 3)));
+        Rafaga = parseInt((String) (jTIngreso.getValueAt(i, 2)));
+        Quantum = parseInt((String) (jTIngreso.getValueAt(i, 3)));
+        ResiduoRafaga = parseInt((String) (jTIngreso.getValueAt(i, 4)));
         if (NProceso > 0) {
             jLNumeroProceso.setText(String.valueOf(NProceso));
         }
@@ -525,13 +533,14 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
 
     public void Ingresar() { //Ingresar proceso a la tabla
         Contador++;
-        Object[] miTabla = new Object[5];
+        Object[] miTabla = new Object[6];
         DefaultTableModel modelo = (DefaultTableModel) jTIngreso.getModel();
         miTabla[0] = Contador;
-        miTabla[1] = jTFCapturaRafaga.getText();
-        miTabla[2] = jTFCapturaQuantum.getText();
-        miTabla[3] = jTFCapturaRafaga.getText();
-        miTabla[4] = "Listo";
+        miTabla[1] = txtPid.getText();
+        miTabla[2] = jTFCapturaRafaga.getText();
+        miTabla[3] = jTFCapturaQuantum.getText();
+        miTabla[4] = jTFCapturaRafaga.getText();
+        miTabla[5] = "Listo";
         modelo.addRow(miTabla);
         jTIngreso.setModel(modelo);
         jTFCapturaRafaga.setText(null);
@@ -561,10 +570,10 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
 
     public void Borrar(int c) { //Elimina los registros de la tabla procesos
         jTIngreso.setValueAt(0, c, 0);
-        jTIngreso.setValueAt("0", c, 1);
         jTIngreso.setValueAt("0", c, 2);
         jTIngreso.setValueAt("0", c, 3);
-        jTIngreso.setValueAt("Terminado", c, 4);
+        jTIngreso.setValueAt("0", c, 4);
+        jTIngreso.setValueAt("Terminado", c, 5);
     }
 
     public void Barra(int rafaga, int residuo) { //Calcula porcentaje de la barra y su progreso
@@ -620,5 +629,6 @@ public class Procesar extends javax.swing.JFrame implements Runnable{
     private javax.swing.JTable jTIngreso;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    public javax.swing.JTextField txtPid;
     // End of variables declaration//GEN-END:variables
 }

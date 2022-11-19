@@ -84,12 +84,8 @@ public class Consultas {
         try {
             Connection conn = objConexion.conexion();
             Statement stmt = conn.createStatement();
-            // Clase ResultSet es donde guardamos el resultado de la consulta
             ResultSet result = stmt.executeQuery(Consulta);
-            // Analiza la estructura de un consulta para averiguar cuántas columnas tiene,
-            // los nombres de las columnas, el tipo de dato etc.
-            ResultSetMetaData rsmd = result.getMetaData();
-            int numColumna = rsmd.getColumnCount();
+            int numColumna = contarRegistrosC();
             Array = new CatalogoModel[numColumna];
 
             int aux = 0;
@@ -105,6 +101,35 @@ public class Consultas {
         }
         return Array;
     }
+    public int contarRegistrosC(){
+        int count = 0;
+        try {
+            Connection conn = objConexion.conexion();
+            PreparedStatement ps = conn.prepareStatement("SELECT count(id) from Catalogo;");
+            ResultSet result = ps.executeQuery();
+            count = result.getInt(1);
+            conn.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+        }
+        return count;
+    }
+    
+    public int contarRegistros(int id){
+        int count = 0;
+        try {
+            Connection conn = objConexion.conexion();
+            PreparedStatement ps = conn.prepareStatement("SELECT count(id) from Procesos WHERE Procesos.idcatalogo = "+id+";); ");
+            ResultSet result = ps.executeQuery();
+            count = result.getInt(1);
+            conn.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+        }
+        return count;
+    }
 
     public CatalogoModel[] consultarProcesos( int id, String nombreCatalogo) {
         CatalogoModel Array[] = null;
@@ -112,8 +137,7 @@ public class Consultas {
             Connection conn = objConexion.conexion();
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery("SELECT *  from Procesos WHERE Procesos.idcatalogo = "+id+";");
-            ResultSetMetaData rsmd = result.getMetaData();
-            int numColumna = rsmd.getColumnCount();
+            int numColumna = contarRegistros(id);
             Array = new CatalogoModel[numColumna];
             
             int aux = 0;
